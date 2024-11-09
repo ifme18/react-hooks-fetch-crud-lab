@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function QuestionForm(props) {
+function QuestionForm({ onAddQuestion }) {
   const [formData, setFormData] = useState({
     prompt: "",
     answer1: "",
@@ -9,6 +9,16 @@ function QuestionForm(props) {
     answer4: "",
     correctIndex: 0,
   });
+  const [isMounted, setIsMounted] = useState(true);
+
+  useEffect(() => {
+   
+    setIsMounted(true);
+    return () => {
+      
+      setIsMounted(false);
+    };
+  }, []);
 
   function handleChange(event) {
     setFormData({
@@ -19,7 +29,38 @@ function QuestionForm(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+
+    const newQuestion = {
+      prompt: formData.prompt,
+      answers: [formData.answer1, formData.answer2, formData.answer3, formData.answer4],
+      correctIndex: parseInt(formData.correctIndex, 10),
+    };
+
+    fetch('http://localhost:4000/questions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newQuestion),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (isMounted) {
+          console.log('New question added:', data);
+          onAddQuestion(data);
+          setFormData({
+            prompt: "",
+            answer1: "",
+            answer2: "",
+            answer3: "",
+            answer4: "",
+            correctIndex: 0,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Error adding question:', error);
+      });
   }
 
   return (
