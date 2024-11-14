@@ -7,7 +7,7 @@ function App() {
   const [page, setPage] = useState("List");
   const [questions, setQuestions] = useState([]);
 
-  // Fetch questions when the component mounts
+  
   useEffect(() => {
     fetch('http://localhost:4000/questions')
       .then((response) => response.json())
@@ -15,7 +15,7 @@ function App() {
   }, []);
 
   function handleAddQuestion(newQuestion) {
-    setQuestions([...questions, newQuestion]); // Update state with the new question
+    setQuestions([...questions, newQuestion]); 
   }
 
   return (

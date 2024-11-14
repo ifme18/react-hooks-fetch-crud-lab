@@ -15,7 +15,7 @@ function QuestionItem({ question, onDelete }) {
     })
       .then((response) => {
         if (response.ok) {
-          onDelete(id); // Call the onDelete prop to update state in the parent component
+          onDelete(id); 
         }
       });
   }

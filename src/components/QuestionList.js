@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import QuestionItem from "./QuestionItem"; // Import QuestionItem component
+import QuestionItem from "./QuestionItem"; 
 
 function QuestionList() {
   const [questions, setQuestions] = useState([]);
@@ -11,7 +11,7 @@ function QuestionList() {
   }, []);
 
   function handleDeleteQuestion(id) {
-    setQuestions(questions.filter((question) => question.id !== id)); // Update state to remove the deleted question
+    setQuestions(questions.filter((question) => question.id !== id)); 
   }
 
   return (
